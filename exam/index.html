@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Myntra Clone</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    input:focus { outline: 2px solid green; }
+    button:hover { background-color: #089104; color: white; }
+    html {scroll-behavior: smooth;}
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <!-- Header -->
+    <header class="fixed top-0 left-0 w-full bg-green-700 text-white p-4 flex justify-between items-center">
+    <div class="text-2xl font-bold flex items-center gap-2">
+        <i class="fas fa-store"></i> Minetra
+    </div>
+    <nav class="space-x-6 flex items-center">
+        <a href="#video" class="hover:underline flex items-center gap-1"><i class="fas fa-home"></i> Home</a>
+        <a href="#products" class="hover:underline flex items-center gap-1"><i class="fas fa-box"></i> Products</a>
+        <a href="#form" class="hover:underline flex items-center gap-1"><i class="fas fa-user"></i> Profile</a>
+    </nav>
+    </header>
+
+  <!-- Hero Section -->
+  <section style="background-image: url('./background2.jpg');" class="bg-cover bg-center h-120 flex items-center justify-center text-green-500 text-8xl font-bold">
+    SHOP MINETRA
+  </section>
+    <!-- Video and Audio -->
+    <section id="video" class="p-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="mb-12">
+        <video controls class="w-full max-h-[75vh] mx-auto">
+            <source src="video.mp4" type="video/mp4">
+            <track src="subtitles.vtt" kind="subtitles" srclang="en" label="English" default>
+        </video>
+        </div>
+        <div class="mt-12">
+        <audio controls class="w-full max-w-md mx-auto block">
+            <source src="audio.mp3" type="audio/mp3">
+        </audio>
+        </div>
+    </div>
+    </section>
+
+  <!-- Form Section -->
+  <section id= "form" class="p-6 max-w-md mx-auto">
+    <form id="interestForm" class="bg-white p-4 shadow rounded">
+      <label class="block mb-2">Name:
+        <input type="text" id="name" class="w-full border p-2" required>
+      </label>
+      <label class="block mb-2">Email:
+        <input type="email" id="email" class="w-full border p-2" required>
+      </label>
+      <label class="block mb-2">Product Interested:
+        <input type="text" id="product" class="w-full border p-2" required>
+      </label>
+      <button type="submit" class="bg-green-500 px-4 py-2 mt-2 rounded hover:bg-green-700">Submit</button>
+    </form>
+  </section>
+
+  <!-- Welcome Message & Location -->
+  <section class="p-6 text-center">
+    <div id="welcomeMsg" class="text-xl font-semibold mb-4"></div>
+    <div id="locationMsg" class="text-sm text-gray-600"></div>
+  </section>
+
+  <!-- Product Search + Sort -->
+  <section id="products" class="p-6 max-w-5xl mx-auto">
+    <div class="flex flex-wrap gap-4 mb-4 items-center">
+      <input type="text" id="searchInput" placeholder="Search product..." class="p-2 border flex-1">
+      <button onclick="searchProducts()" class="px-4 py-2 bg-green-600 text-white rounded">Search</button>
+      <select id="sortSelect" onchange="sortProducts()" class="p-2 border">
+        <option value="">Sort by Price</option>
+        <option value="asc">Low to High</option>
+        <option value="desc">High to Low</option>
+      </select>
+    </div>
+    <div id="product-container" class="grid sm:grid-cols-2 md:grid-cols-4 gap-4"></div>
+  </section>
+<!-- Pagination -->
+  <div id="pagination" class="flex justify-center space-x-2 mb-8"></div>
+  <script src="script.js"> 
+  </script>
+</body>
+</html>
