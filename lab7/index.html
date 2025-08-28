@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FitCheck Catalog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen p-6">
+  <div class="max-w-5xl mx-auto">
+    <header class="mb-6">
+      <h1 class="text-3xl font-semibold">FitCheck Catalog</h1>
+      <p class="text-sm text-gray-600">Browse and filter FitCheck items (wearables, equipment, nutrition, services).</p>
+    </header>
+
+    <section class="bg-white p-4 rounded-lg shadow mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <input id="qItem" placeholder="Search item name or slug" class="p-2 border rounded" />
+
+        <select id="qCategory" class="p-2 border rounded">
+          <option value="">All categories</option>
+          <option value="wearable">Wearable</option>
+          <option value="equipment">Equipment</option>
+          <option value="nutrition">Nutrition</option>
+          <option value="service">Service</option>
+        </select>
+
+        <div class="flex gap-2">
+          <input id="qMinPrice" type="number" placeholder="Min price" class="p-2 border rounded w-1/2" />
+          <input id="qMaxPrice" type="number" placeholder="Max price" class="p-2 border rounded w-1/2" />
+        </div>
+
+        <select id="qSort" class="p-2 border rounded md:col-span-1">
+          <option value="">Sort (default)</option>
+          <option value="price_asc">Price: Low → High</option>
+          <option value="price_desc">Price: High → Low</option>
+          <option value="rating">Top rated</option>
+        </select>
+
+        <input id="qLimit" type="number" placeholder="Limit" class="p-2 border rounded" />
+
+        <div class="flex items-center gap-2">
+          <button id="btnFetch" class="px-4 py-2 bg-blue-600 text-white rounded">Fetch</button>
+          <button id="btnReset" class="px-4 py-2 border rounded">Reset</button>
+          <div id="loader" class="hidden text-sm text-gray-500">Loading...</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="results" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></section>
+
+    <footer class="mt-6 text-sm text-gray-500">Client expects API at <code>http://localhost:3000/api</code></footer>
+  </div>
+
+  <script>
+    const apiBase = 'http://localhost:3000/api'; 
+
+    const el = (id) => document.getElementById(id);
+    const qItem = el('qItem');
+    const qCategory = el('qCategory');
+    const qMinPrice = el('qMinPrice');
+    const qMaxPrice = el('qMaxPrice');
+    const qSort = el('qSort');
+    const qLimit = el('qLimit');
+    const btnFetch = el('btnFetch');
+    const btnReset = el('btnReset');
+    const loader = el('loader');
+    const results = el('results');
+
+    function buildQuery() {
+      const params = new URLSearchParams();
+      if (qItem.value.trim()) params.set('item', qItem.value.trim());
+      if (qCategory.value) params.set('category', qCategory.value);
+      if (qMaxPrice.value) params.set('price', qMaxPrice.value);
+      if (qMinPrice.value) params.set('minPrice', qMinPrice.value);
+      if (qSort.value) params.set('sort', qSort.value);
+      if (qLimit.value) params.set('limit', qLimit.value);
+      const q = params.toString();
+      return q ? `${apiBase}?${q}` : apiBase;
+    }
+
+    function showLoader(show) {
+      loader.classList.toggle('hidden', !show);
+    }
+
+    function renderItems(itemsArr) {
+      results.innerHTML = '';
+      if (!itemsArr || itemsArr.length === 0) {
+        results.innerHTML = '<div class="col-span-full p-6 text-center text-gray-600">No items found.</div>';
+        return;
+      }
+
+      itemsArr.forEach(it => {
+        const card = document.createElement('div');
+        card.className = 'bg-white p-4 rounded shadow';
+        card.innerHTML = `
+          <h3 class="font-semibold text-lg">${it.name}</h3>
+          <div class="text-sm text-gray-500 mb-2">${it.category} • ₹${it.price.toFixed(2)}</div>
+          <p class="text-sm text-gray-700 mb-3">${it.description}</p>
+          <div class="text-xs text-gray-600 flex justify-between items-center">
+            <span>Rating: ${it.rating} ⭐</span>
+            <span>Stock: ${it.stock}</span>
+          </div>
+        `;
+        results.appendChild(card);
+      });
+    }
+
+    async function fetchData() {
+      try {
+        showLoader(true);
+        const url = buildQuery();
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Network response not ok');
+        const data = await res.json();
+        renderItems(data.items);
+      } catch (err) {
+        results.innerHTML = `<div class="col-span-full p-6 text-red-500">Error: ${err.message}</div>`;
+      } finally {
+        showLoader(false);
+      }
+    }
+
+    btnFetch.addEventListener('click', fetchData);
+    btnReset.addEventListener('click', () => {
+      qItem.value = '';
+      qCategory.value = '';
+      qMinPrice.value = '';
+      qMaxPrice.value = '';
+      qSort.value = '';
+      qLimit.value = '';
+      results.innerHTML = '';
+    });
+
+  </script>
+</body>
+</html>

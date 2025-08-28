@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitTrack Pro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen font-sans bg-gradient-to-br from-violet-900 via-indigo-900 to-purple-900 text-white">
+
+  <header class="relative w-full py-6 mb-8">
+
+  <div class="absolute inset-0 bg-gradient-to-r from-emerald-600 via-gray-700 to-emerald-700 opacity-95 rounded-b-3xl shadow-lg"></div>
+
+  <div class="relative z-10 text-center">
+    <h1 class="text-4xl md:text-5xl font-extrabold text-white drop-shadow-lg">FitTrack Pro</h1>
+    <p class="text-lg md:text-xl text-white/80 mt-2 drop-shadow-md">Your Modern Fitness Tracker</p>
+  </div>
+</header>
+
+
+  <main class="p-6 max-w-4xl mx-auto">
+
+  <section class="bg-gray-800 bg-opacity-60 p-6 rounded-lg shadow-lg mb-6">
+      <h2 class="text-xl font-semibold mb-4">Add User</h2>
+      <form id="userForm" class="flex flex-col space-y-3">
+        <input type="text" id="username" placeholder="Username" 
+               class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition transform hover:scale-105">
+          Add User
+        </button>
+      </form>
+      <div class="mt-4">
+        <h3 class="font-semibold mb-2">Users</h3>
+        <div id="userList" class="space-y-2 max-h-40 overflow-y-auto text-black"></div>
+      </div>
+    </section>
+
+    <section class="bg-gray-800 bg-opacity-60 p-6 rounded-lg shadow-lg mb-6">
+      <h2 class="text-xl font-semibold mb-4">Log Workout</h2>
+      <form id="workoutForm" class="flex flex-col space-y-3">
+        <input type="text" id="workoutUserId" placeholder="User ID" class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500" required>
+        <input type="text" id="activity" placeholder="Activity (e.g., Running)" class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500" required>
+        <input type="number" id="duration" placeholder="Duration (minutes)" class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500 text-black" required>
+        <button type="submit" class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-green-700 transition transform hover:scale-105">Log Workout</button>
+      </form>
+      <div class="mt-4">
+        <h3 class="font-semibold mb-2">Workouts</h3>
+        <div id="workoutList" class="space-y-2 max-h-40 overflow-y-auto text-black"></div>
+      </div>
+    </section>
+
+    <section class="bg-gray-800 bg-opacity-60 p-6 rounded-lg shadow-lg mb-6">
+      <h2 class="text-xl font-semibold mb-4">Log Meal</h2>
+      <form id="mealForm" class="flex flex-col space-y-3">
+        <input type="text" id="mealUserId" placeholder="User ID" class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+        <input type="text" id="mealName" placeholder="Meal Name" class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+        <input type="number" id="calories" placeholder="Calories" class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-500 text-black" required>
+        <button type="submit" class="bg-amber-600 text-white px-4 py-2 rounded hover:bg-orange-700 transition transform hover:scale-105">Log Meal</button>
+      </form>
+      <div class="mt-4">
+        <h3 class="font-semibold mb-2">Meals</h3>
+        <div id="mealList" class="space-y-2 max-h-40 overflow-y-auto text-black"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -70,7 +70,6 @@ if (!visitedFlag) {
       </div>
     )}
 
-
       <form onSubmit={handleSubmit} className="space-y-4 bg-white shadow-md rounded p-6">
         <input name="name" type="text" required placeholder="Full Name" className="w-full p-2 border rounded" />
         <input name="email" type="email" required placeholder="Email" className="w-full p-2 border rounded" />
